@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- 1.声明切面类 -->
+	<bean id="XmlAspect" class="net.study.spring.aop.aspect.XmlAspect"></bean>
+	<!--2.声明事务类 -->
+	<bean id="HelloImpl" class="net.study.spring.aop.HelloImpl"></bean>
+	<!--3.配置切面关系 -->
+	<aop:config>
+		<!-- 3.1 声明在哪里拦截 -->
+		<aop:pointcut expression="execution(* net.study.spring.aop.IHello.*(..))"
+			id="mypointcut" />
+		<!-- 3.2声明用什么类 方法切入 -->
+		<aop:aspect ref="XmlAspect">
+			<!-- 在哪个类用代理类的哪个方法在mypointcut前切入 -->
+			<aop:before pointcut-ref="mypointcut" method="beforeMethod" />
+		</aop:aspect>
+	</aop:config>
+
+
+</beans>        
